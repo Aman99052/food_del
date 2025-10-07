@@ -15,7 +15,7 @@ build/
 __pycache__/
 *.py[cod]
 *.pyo
-*.pyd
+*.pyd  
 *.egg
 *.egg-info/
 *.env
@@ -31,3 +31,4 @@ logs/
 # OS-generated files
 .DS_Store
 Thumbs.db
+

@@ -5,11 +5,13 @@ dotenv.config();
 
 export const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb+srv://amankumarrrr999:reflection999@cluster0.ebsizda.mongodb.net/food-del', {
+    await mongoose.connect('mongodb+srv://amankumarrrr999:reflection999@cluster0.ywedciz.mongodb.net/food-del', {
+
       useNewUrlParser: true,
      // useCreateIndex: true,
       useUnifiedTopology: true,
      // useFindAndModify: false,
+  
     });
     console.log("DB Connected");
   } catch (error) {

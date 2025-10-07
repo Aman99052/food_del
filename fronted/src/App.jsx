@@ -11,6 +11,7 @@ import Verify from './pages/Verify/Verify'
 
 const App = () => {
 
+  //setShowLogin function pass as props to setShowLogin={setShowLogin} to loginPopup.jsx
   const [showLogin,setShowLogin] = useState(false);
 
   return (

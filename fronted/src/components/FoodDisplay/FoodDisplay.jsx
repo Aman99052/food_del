@@ -15,7 +15,9 @@ const FoodDisplay = ({ category }) => {
       <div className='food-display-list'>
         {food_list.map((item,index) => {
           {console.log(category,item.category);}
+          //this category function filter the food item from fooditem.jsx 
           if (category === "All" || category === item.category) {
+            //to pass all the food list from fooditem.jsx to foodddisplay;
             return <FoodItem key={index} id={item._id} name={item.name} description={item.description} price={item.price} image={item.image}/>
               ;
           }

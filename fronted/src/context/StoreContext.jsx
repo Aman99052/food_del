@@ -1,27 +1,26 @@
 import { createContext, useEffect, useState } from "react";
-import { food_list} from "../assets/assets";
+import { food_list as static_food_list } from "../assets/assets"; // ✅ Renamed import to avoid clash
 import axios from "axios";
 
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
-
     const [cartItems, setCartItems] = useState({});
-    const [food_list, setFoodList] = useState([]);
+    const [foodList, setFoodList] = useState([]); // ✅ Changed variable name
     const [token, setToken] = useState("");
     const url = "http://localhost:4000";
 
-    const addToCart =async (itemId) => {
+    const addToCart = async (itemId) => {
         setCartItems((prev) => ({
             ...prev,
-            [itemId]: (prev[itemId] || 0) + 1
+            [itemId]: (prev[itemId] || 0) + 1,
         }));
-        if(token) {
-            await axios.post(url+"/api/cart/add",{itemId},{headers:{token}})
+        if (token) {
+            await axios.post(url + "/api/cart/add", { itemId }, { headers: { token } });
         }
     };
 
-    const removeFromCart = async(itemId) => {
+    const removeFromCart = async (itemId) => {
         setCartItems((prev) => {
             const newCount = (prev[itemId] || 0) - 1;
             if (newCount > 0) {
@@ -31,8 +30,8 @@ const StoreContextProvider = (props) => {
                 return rest;
             }
         });
-        if(token){
-            await axios.post(url+"/api/cart/remove",{itemId},{headers:{token}})
+        if (token) {
+            await axios.post(url + "/api/cart/remove", { itemId }, { headers: { token } });
         }
     };
 
@@ -40,7 +39,7 @@ const StoreContextProvider = (props) => {
         let totalAmount = 0;
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
-                let itemInfo = food_list.find((product) => String(product._id) === String(item));
+                const itemInfo = foodList.find((product) => String(product._id) === String(item));
                 if (itemInfo) {
                     totalAmount += itemInfo.price * cartItems[item];
                 }
@@ -58,10 +57,10 @@ const StoreContextProvider = (props) => {
         }
     };
 
-    const loadCartData =async(token)=>{
-        const response =await axios.post(url+"/api/cart/get",{},{headers:{token}})
-        setCartItems(response.data.cartData);
-    }
+    const loadCartData = async (token) => {
+        const response = await axios.post(url + "/api/cart/get", {}, { headers: { token } });
+        setCartItems(response.data.cartData || {}); // ✅ Fallback to empty object
+    };
 
     useEffect(() => {
         const loadData = async () => {
@@ -69,7 +68,7 @@ const StoreContextProvider = (props) => {
             const storedToken = localStorage.getItem("token");
             if (storedToken) {
                 setToken(storedToken);
-                await loadCartData(localStorage.getItem("token"));
+                await loadCartData(storedToken);
             }
         };
         loadData();
@@ -84,8 +83,7 @@ const StoreContextProvider = (props) => {
     };
 
     const contextValue = {
-        food_list,
-       // menu_list,
+        food_list: foodList, // ✅ renamed internally, passed as food_list to match consumers
         cartItems,
         setCartItems,
         addToCart,

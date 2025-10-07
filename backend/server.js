@@ -27,6 +27,7 @@ app.use("/images",express.static('uploads'))
 app.use("/api/cart",cartRouter)
 app.use("/api/order",orderRouter)
 
+//request the data from server
 app.get("/", (req, res) => {
   res.send("API WORKING");
 });

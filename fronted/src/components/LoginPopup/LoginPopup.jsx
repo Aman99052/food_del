@@ -4,8 +4,11 @@ import { assets } from '../../assets/assets'
 import { StoreContext } from '../../context/StoreContext'
 import axios from 'axios'
 
+//props
 const LoginPopup = ({setShowLogin}) => {
 
+
+//Fetch the url with StoreContext
   const {url,setToken}=useContext(StoreContext)
 
     const [currState,setCurrState] = useState("Login");
@@ -28,12 +31,14 @@ const LoginPopup = ({setShowLogin}) => {
     const onLogin =async(event)=>{
        event.preventDefault()
        let newUrl=url;
+       //API call in login function
        if(currState=="Login"){
         newUrl+="/api/user/login"
        }
        else{
         newUrl+="/api/user/register"
        }
+       //call API
        const response =await axios.post(newUrl,data);
 
        if(response.data.success){
