@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: my-backend-app
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: cd backend && npm ci
+    startCommand: cd backend && node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 20.17.0
+      - key: NODE_ENV
+        value: production
